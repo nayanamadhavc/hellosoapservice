@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://www.flydubai.com/HelloSoap">
+
+    <xsd:element name="HelloSoapRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ClientName" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="HelloSoapResponse" >
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+</xsd:schema>

@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<xsd:schema xmlns:SOAP-ENV="http://www.w3.org/2001/12/soap-envelope"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:SOAP-ENV-encodingStyle = "http://www.w3.org/2001/12/soap-encoding"
+             xmlns:tns="http://www.flydubai.com/HelloSoap"
+             targetNamespace="http://www.flydubai.com/HelloSoap">
+
+    <xsd:element name="HelloSoapRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ClientName" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="HelloSoapResponse" >
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+</xsd:schema>
