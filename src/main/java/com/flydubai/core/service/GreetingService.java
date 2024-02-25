@@ -1,7 +1,7 @@
 package com.flydubai.core.service;
 
+import com.flydubai.core.exception.BadRequestException;
 import com.flydubai.hellosoap.HelloSoapResponse;
-import jakarta.ws.rs.BadRequestException;
 import org.springframework.stereotype.Service;
 
 /**

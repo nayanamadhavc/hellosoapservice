@@ -7,24 +7,20 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.server.EndpointAdapter;
 import org.springframework.ws.server.EndpointMapping;
 import org.springframework.ws.server.endpoint.adapter.MessageEndpointAdapter;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
-import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
-import org.springframework.ws.soap.server.endpoint.SoapFaultMappingExceptionResolver;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
 import org.springframework.xml.xsd.XsdSchema;
-
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPException;
-import java.util.Properties;
+
 
 @EnableWs
 @Configuration
@@ -43,7 +39,7 @@ public class WSConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean<>(messageDispatcherServlet, "/*");
     }
 
-    // To generate wsdl from xsd schema
+    // To generate wsdl from xsd schema and access it at helloschema.wsdl location
     @Bean(name="helloschema")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema helloSoapSchema) {
         DefaultWsdl11Definition defaultWsdl11Definition = new DefaultWsdl11Definition();
@@ -73,35 +69,9 @@ public class WSConfig extends WsConfigurerAdapter {
     }
 
     @Bean
-    public SoapFaultMappingExceptionResolver soapFaultMappingExceptionResolver() {
-        SoapFaultMappingExceptionResolver soapFaultMappingExceptionResolver = new SoapFaultMappingExceptionResolver();
-
-        SoapFaultDefinition soapFaultDefinition = new SoapFaultDefinition();
-        soapFaultDefinition.setFaultCode(SoapFaultDefinition.SERVER);
-        soapFaultMappingExceptionResolver.setDefaultFault(soapFaultDefinition);
-
-        Properties properties = new Properties();
-        properties.setProperty(Exception.class.getName(), SoapFaultDefinition.SERVER.toString());
-
-        soapFaultMappingExceptionResolver.setExceptionMappings(properties);
-        soapFaultMappingExceptionResolver.setOrder(1);
-
-        return soapFaultMappingExceptionResolver;
-    }
-
-    @Bean
     public SaajSoapMessageFactory messageFactory() throws SOAPException {
-
         MessageFactory messageFactory = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
         SaajSoapMessageFactory soapMessageFactory = new SaajSoapMessageFactory(messageFactory);
-
-//        messageFactory.setSoapVersion(SoapVersion.SOAP_12);
         return soapMessageFactory;
-    }
-
-    @Bean
-    public WebServiceTemplate webServiceTemplate() throws SOAPException {
-        WebServiceTemplate webServiceTemplate = new WebServiceTemplate(messageFactory());
-        return webServiceTemplate;
     }
 }
