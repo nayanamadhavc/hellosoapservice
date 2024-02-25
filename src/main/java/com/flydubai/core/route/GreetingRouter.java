@@ -41,8 +41,9 @@ public class GreetingRouter extends RouteBuilder {
                         String clientName = request.getClientName();
                         HelloSoapResponse greetingMessage = greetingService.getGreetingMessage(clientName);
                         msg.getMessage().setBody(greetingMessage);
+                        logger.info("Message returned: {}", msg.getMessage().getBody());
                     }
                 })
-                .marshal().jaxb(HelloSoap.class.getPackage().getName());
+                .marshal().jaxb(HelloSoapResponse.class.getPackage().getName());
     }
 }
