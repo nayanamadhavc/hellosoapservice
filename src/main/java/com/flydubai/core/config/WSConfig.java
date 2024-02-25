@@ -47,6 +47,8 @@ public class WSConfig extends WsConfigurerAdapter {
         defaultWsdl11Definition.setLocationUri(environmentConfig.getLocationUri());
         defaultWsdl11Definition.setTargetNamespace(environmentConfig.getTargetNamespace());
         defaultWsdl11Definition.setSchema(helloSoapSchema);
+        defaultWsdl11Definition.setRequestSuffix("Soap");
+        defaultWsdl11Definition.setResponseSuffix("SoapResponse");
         defaultWsdl11Definition.setCreateSoap12Binding(true);
 
         return defaultWsdl11Definition;

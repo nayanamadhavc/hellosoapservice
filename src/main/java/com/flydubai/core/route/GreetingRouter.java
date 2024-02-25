@@ -1,7 +1,7 @@
 package com.flydubai.core.route;
 
 import com.flydubai.core.service.GreetingService;
-import com.flydubai.hellosoap.HelloSoapRequest;
+import com.flydubai.hellosoap.HelloSoap;
 import com.flydubai.hellosoap.HelloSoapResponse;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -32,17 +32,17 @@ public class GreetingRouter extends RouteBuilder {
      */
     @Override
     public void configure() throws Exception {
-        from("spring-ws:rootqname:{http://www.flydubai.com/HelloSoap}HelloSoapRequest?endpointMapping=#endpointMapping")
-                .unmarshal().jaxb(HelloSoapRequest.class.getPackage().getName())
+        from("spring-ws:rootqname:{http://www.flydubai.com/HelloSoap}HelloSoap?endpointMapping=#endpointMapping")
+                .unmarshal().jaxb(HelloSoap.class.getPackage().getName())
                 .process(new Processor() {
                     @Override
                     public void process(Exchange msg) throws Exception {
-                        HelloSoapRequest request = msg.getIn().getBody(HelloSoapRequest.class);
+                        HelloSoap request = msg.getIn().getBody(HelloSoap.class);
                         String clientName = request.getClientName();
                         HelloSoapResponse greetingMessage = greetingService.getGreetingMessage(clientName);
                         msg.getMessage().setBody(greetingMessage);
                     }
                 })
-                .marshal().jaxb(HelloSoapRequest.class.getPackage().getName());
+                .marshal().jaxb(HelloSoap.class.getPackage().getName());
     }
 }
